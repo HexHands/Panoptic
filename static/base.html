@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/base.css">
+    <link rel="icon" href="/static/PanopticLogo.ico" type="image/x-icon">
+    <title>{{ title }}</title>
+    {{ head|safe }}
+  </head>
+
+  <body>
+    <div class="sidebar">
+      {{ sidebar|safe }}
+      <div class="footer">
+        <p>
+          <a href="/" target="_blank"><img src="/static/PanopticLogo.png" style="margin-right: 9px; vertical-align: bottom;">Panoptic</a>
+          <a href="https://github.com/HexHands/Panoptic" target="_blank"><img src="/static/GitHub.png" style="margin-right: 9px; vertical-align: bottom;">GitHub</a>
+        </p>
+      </div>
+    </div>
+    <div class="content">
+      {{ body|safe }}
+    </div>
+  </body>
+</html>

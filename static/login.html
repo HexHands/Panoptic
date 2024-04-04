@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{{ loggedin|safe }}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panoptic</title>
+<link rel="icon" type="image/x-icon" href="/static/PanopticLogo.ico">
+<link rel="stylesheet" href="/static/notification.css">
+<link rel="stylesheet" href="/static/setting.css">
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    width: 100%;
+  }
+
+   .bottom {
+    text-align: center;
+    width: 100%;
+  }
+</style>
+</head>
+<body>
+
+<div class="main-content">
+  <div style="text-align: center; width: 100%;">
+    <img src="/static/PanopticLogo.png" alt="Panoptic Logo" style="margin-bottom: 20px;">
+    <div class="item">
+      <input id="password" type="password" class="setting-input" placeholder="Password">
+      <button id="signin" class="setting-button-square">🔑</button>
+    </div>
+  </div>
+</div>
+
+<div class="bottom">
+  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="/static/license.png" /></a>
+</div>
+
+<div id='notification' class='notification'></div>
+
+<script>
+    function showNotification(message) {
+      const notificationEl = document.getElementById('notification');
+      notificationEl.textContent = message;
+      notificationEl.style.display = 'block';
+
+      setTimeout(() => {
+        notificationEl.style.display = 'none';
+      }, 3000);
+    }
+    
+    document.getElementById('password').addEventListener('keydown', function(event) {
+    if(event.key === 'Enter') {
+        document.getElementById('signin').click();
+      }
+    });
+
+    document.getElementById('signin').addEventListener('click', function() {
+        const url = '/signin';
+        const password = document.getElementById('password').value;
+        const data = {
+    	password: password
+        };
+
+        fetch(url, {
+        	method: 'POST',
+        	headers: {
+	    'Content-Type': 'application/json',
+	},
+	body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+	console.log(data);
+	if(data.correct === true) {
+	    showNotification(data.message);
+	    document.cookie = "password=" + encodeURIComponent(password) + "; path=/; max-age=3600";
+	    window.location.href = "/devices";
+	} else {
+	    showNotification(data.message);
+	}
+    })
+    .catch((error) => {
+	console.error(error);
+    });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+.sidebar {
+  height: 100vh;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidebar a {
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  display: block;
+}
+
+.sidebar p {
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+}
+
+.sidebar img {
+  width: 25px;
+  height: 25px;
+}
+
+.sidebar a.active {
+  background-color: #3584e4;
+  color: white;
+}
+
+.sidebar a:hover {
+  background-color: #99c1f1;
+  color: white;
+}
+
+.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+}
+
+body {
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+.bar {
+  width: 95%;
+  height: 2px;
+  background-color: #5e5c64;
+  border-radius: 5px;
+  margin: 5px 0;
+  transform: translateX(-1px);
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 200px;
+  background-color: #111;
+  color: white;
+  text-align: left;
+  padding: 10px 0;
+}
