@@ -52,7 +52,11 @@ On this page, you can watch each video. All the camera feeds are combined into a
 Finally, the last two sections: Panoptic will take you to our website, and the GitHub button links to this repo! If you have any issues or questions, please contact me by submitting an issue on GitHub. And if you're really into it, you're welcome to contribute code!
 
 # Disclaimer
-This system isn't designed with high-level security for storing or accessing videos; it's intended for home use and is probably safer not connected to the internet. We can't promise it will work perfectly on all systems. If it does work for you, we're eager to hear about your experience. Please note, I am not responsible for any leaks or failures that may occur with the system.
+Our system is designed primarily for home use and focuses on ease of access rather than high-level security. It's important to note that video data transferred over the internet is not encrypted, which could pose a risk if intercepted. The system does incorporate password protection; however, passwords are transmitted without encryption, potentially exposing them to vulnerabilities.
+
+Given these considerations, we advise against connecting the system to the internet unless necessary for your use case. While we strive to ensure the system's reliability across various setups, its performance on different systems cannot be guaranteed. We are not liable for any data breaches or system failures that may occur.
+
+Your feedback is valuable to us. Should you decide to use our system, we would greatly appreciate hearing about your experience. Your insights can help us make continuous improvements.
 
 # License
 Creative Commons Attribution Non Commercial Share Alike 4.0 International (CC-BY-NC-SA-4.0).
