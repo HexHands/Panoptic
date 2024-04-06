@@ -43,7 +43,7 @@ Next, go to the Devices section. Here, click on one of the little pencil icons t
 ![PanopticLogo](https://hexhands.github.io/HexHandsASSET/IMAGE/Panoptic/DevicesPageTutorial.png)
 Then, you'll see your device's name, which is fetched from v4l2-ctl. In my case, I've selected something that's not a camera. For a camera, you'd update the display name, dimensions (width and height), framerate, recording length, video node, and audio node. You can also choose to enable or disable the camera. Make sure to save your settings.
 ![PanopticLogo](https://hexhands.github.io/HexHandsASSET/IMAGE/Panoptic/DevicesSettingPageTutorial.png)
-Once a camera is enabled, it should start recording. You can verify this in the Logs section, where you'll want to see messages like "[...] has started recording..." If you encounter any errors from ffmpeg or similar issues, go back and adjust the device's node settings.
+Once a camera is enabled, it should start recording. You can verify this in the Logs section, where you'll want to see messages like "[...] has started recording..." If you encounter any errors from FFmpeg or similar issues, go back and adjust the device's node settings.
 ![PanopticLogo](https://hexhands.github.io/HexHandsASSET/IMAGE/Panoptic/LogsPage.png)
 To view your recordings, head over to Captures. Here, each day's recordings are listed, and you can download a full day's worth as a zip file. To view individual recordings, click the little camera icon.
 ![PanopticLogo](https://hexhands.github.io/HexHandsASSET/IMAGE/Panoptic/CapturesPageTutorial.png)
@@ -52,9 +52,11 @@ On this page, you can watch each video. All the camera feeds are combined into a
 Finally, the last two sections: Panoptic will take you to our website, and the GitHub button links to this repo! If you have any issues or questions, please contact me by submitting an issue on GitHub. And if you're really into it, you're welcome to contribute code!
 
 # Disclaimer
-Our system is designed primarily for home use and focuses on ease of access rather than high-level security. It's important to note that video data transferred over the internet is not encrypted, which could pose a risk if intercepted. The system does incorporate password protection; however, passwords are transmitted without encryption, potentially exposing them to vulnerabilities.
+Our system is designed primarily for home use, focusing on ease of access rather than high-level security. It's important to note that while the system undergoes testing to ensure functionality, there may still be undetected bugs that could lead to the unintended deletion of files. Additionally, installing the system in a directory with existing files could result in the loss of information. We advise users to proceed with caution and recommend backing up important data before installation.
 
-Given these considerations, we advise against connecting the system to the internet unless necessary for your use case. While we strive to ensure the system's reliability across various setups, its performance on different systems cannot be guaranteed. We are not liable for any data breaches or system failures that may occur.
+Please be aware that video data is transferred over the internet and is not encrypted, which could pose a risk if intercepted. The system does incorporate password protection; however, passwords are transmitted without encryption, potentially exposing them to vulnerabilities.
+
+Given these considerations, we advise against connecting the system to the internet unless necessary for your use case. While we strive to ensure the system's reliability across various setups, its performance on different systems cannot be guaranteed. We are not liable for any data breaches, system failures, or data loss that may occur.
 
 Your feedback is valuable to us. Should you decide to use our system, we would greatly appreciate hearing about your experience. Your insights can help us make continuous improvements.
 
