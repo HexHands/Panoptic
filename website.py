@@ -420,10 +420,8 @@ def capturesreturn(device, day, capture):
 @app.route('/logs')
 @checkpassword
 def logs():
-	with open("./data/log.txt", 'r') as file:
-		lines = file.readlines()
-	reversed_lines = lines[::-1]
-	html_line = ''.join([line.strip() + '<br>' for line in reversed_lines])
+	lines = log.read_logs()
+	html_line = ''.join([line.strip() + '<br>' for line in lines])
 	return render_template_string(open("./static/base.html", "r").read(),
 		title="Panoptic",
 		head="",
