@@ -6,6 +6,8 @@ import log
 import threading
 import time
 import sys
+import subprocess
+import requests
 
 #########################
 
@@ -44,16 +46,17 @@ def eraseold():
 				os.rmdir(folder)
 			data.pop(0)
 		except Exception as e:
-			print(log.l(f"ERROR: erase.py > eraseold > {e} {currentsize}"))
+			print(log.l(f"ERROR: erase.py > eraseold > {e}"))
 
 #########################
 
 def mainerase():
 	systemsettings = webcam.getsetting()
 	erasefilepath = "./data/erase.json"
+	argvfilepath = "./data/argv.json"
 	if not os.path.exists(erasefilepath):
 		with open(erasefilepath, "w") as file:
-			file.write(json.dumps({"lasterased": 0}))
+			file.write(json.dumps({"lasterased": 0, "lastreboot": time.time()}))
 
 	with open(erasefilepath, "r") as file:
 		data = json.load(file)
@@ -65,6 +68,23 @@ def mainerase():
 		data.update(data)
 		with open(erasefilepath, "w") as file:
 			file.write(json.dumps(data, indent=2))
+
+	if data["lastreboot"] < time.time() - int(systemsettings["autoreboot"]) * 60 * 60 and systemsettings.get("endireboot", True):
+		print(log.l("REBOOT: erase.py > mainerase > 60 second countdown till auto reboot."))
+		data.update({"lastreboot": time.time()})
+		with open(erasefilepath, "w") as file:
+			file.write(json.dumps(data, indent=2))
+		time.sleep(60)
+		print(log.l("REBOOT: erase.py > mainerase > Auto rebooting system."))
+
+		with open(argvfilepath, "r") as file:
+			argvs = json.load(file)
+
+		response = requests.put(f"http://localhost:{argvs.get('port', '8080')}/reboot", timeout=5, cookies={"password": systemsettings.get("password", "")})
+
+		print(log.l(f"REBOOT: erase.py > mainerase > Reboot requested with code {response.status_code} and response {response.json()['message']}."))
+
+		#subprocess.run("reboot")
 
 #########################
 
@@ -78,7 +98,10 @@ def main():
 			sys.exit(0)
 
 		time.sleep(1)
-		mainerase()
+		try:
+			mainerase()
+		except Exception as e:
+			print(log.l(f"REBOOT: erase.py > main > {e}"))
 
 def start():
 	thread = threading.Thread(target=main)

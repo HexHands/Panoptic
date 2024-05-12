@@ -24,7 +24,9 @@ basedata = {
 basesettingsdata = {
 	"disksize": 20,
 	"erasefrequency": 24,
-	"password": "panopticsystem"
+	"password": "panopticsystem",
+	"autoreboot": 24,
+	"endireboot": True
 }
 sessiondevices = {}
 

@@ -14,10 +14,10 @@ import zipfile
 #########################
 
 sidebar = [
-{"type": "btn", "name": "Devices", "url": "/devices"},
-{"type": "btn", "name": "Captures", "url": "/captures"},
-{"type": "btn", "name": "Logs", "url": "/logs"},
-{"type": "btn", "name": "Settings", "url": "/settings"}
+	{"type": "btn", "name": "Devices", "url": "/devices"},
+	{"type": "btn", "name": "Captures", "url": "/captures"},
+	{"type": "btn", "name": "Logs", "url": "/logs"},
+	{"type": "btn", "name": "Settings", "url": "/settings"}
 ]
 
 #########################
@@ -190,7 +190,7 @@ def devicesany(device):
 		<input type='text' class='setting-input' id='displayname' placeholder='Hallway View'>
 		""", "color": "yellow"},
 
-		{"name": "Active", "content": "Enable/Disable<input type='checkbox' id='active' class='setting-checkbox' checked/>", "color": "green"},
+		{"name": "Active", "content": "<span class='setting-label'>Enable/Disable</span><input type='checkbox' id='active' class='setting-checkbox' checked/>", "color": "green"},
 
 		{"name": "Resolution", "content": """
 		<span class="setting-label">Width x Height (PX)</span>
@@ -439,6 +439,8 @@ def settings():
 			document.getElementById('disksize').value = '{data.get("disksize", "20")}';
 		    document.getElementById('erasefrequency').value = '{data.get("erasefrequency", "24")}';
 		    document.getElementById('password').value = '{data.get("password", "")}';
+		    document.getElementById('autoreboot').value = '{data.get("autoreboot", "24")}';
+		    document.getElementById('endireboot').checked = {str(data.get("endireboot", True)).lower()};
 		}}
 
 	    function setupSlider(sliderId, displayId) {{
@@ -453,6 +455,7 @@ def settings():
 		document.addEventListener('DOMContentLoaded', function() {{
     		setdata();
     		setupSlider("erasefrequency", "erasefrequencynumb");
+    		setupSlider("autoreboot", "autorebootnumb");
 		}});
 	</script>
 	"""
@@ -463,7 +466,7 @@ def settings():
 		<div class="settings-section">
 			<input type='text' id='disksize' class='setting-input' placeholder='20'>
 		</div>
-		<div class='setting-explanation'>❔ The maxmimum allowed space for captures in gigabytes.</div>
+		<div class='setting-explanation' style='margin-top: 0px;'>❔ The maxmimum allowed space for captures in gigabytes.</div>
 		""", "color": "yellow"},
 
 		{"name": "Erase", "content": """
@@ -484,13 +487,33 @@ def settings():
 		{"name": "Password", "content": """
 		<span class="setting-label">Password</span>
 		<input type='text' id='password' class='setting-input' placeholder='panopticsystem'>
-		<div class='setting-explanation'>❔ Password that is used when logging in. Session lasts 1 hour.</div>
+		<div class='setting-explanation' style='margin-top: 0px;'>❔ Password that is used when logging in. Session lasts 1 hour.</div>
 		<div class='setting-bar'></div>
 		<button class='setting-button-orange' id='logout' onclick='logoutButton()'>Logout</button>
 		""", "color": "orange"},
 
 		{"name": "Save", "content": """
 		<button class='setting-button-blue' id='save' onclick='savesystemButton()'>Save Settings</button>
+		""", "color": "red"},
+
+		{"name": "Auto Reboot", "content": """
+		<span class="setting-label">Enable/Disable</span>
+		<input type='checkbox' id='endireboot' class='setting-checkbox' checked/>
+
+		<div class='setting-bar'></div>
+
+		<span class="setting-label">Auto Reboot (H)</span>
+		<div class="settings-section">
+			<div class="slider-wrapper">
+				<div class="setting-item">
+		  			<div class="setting-control">
+		    			<input type="range" id="autoreboot" name="autoreboot" min="3" max="96" class="setting-slider">
+		    			<span id="autorebootnumb" style="margin-left: 5px;">24</span>H
+		  			</div>
+				</div>
+			</div>
+		</div>
+		<div class='setting-explanation'>❔ How often to automatically restart the system.</div>
 		""", "color": "red"},
 
 		{"name": "Reboot", "content": """
@@ -544,6 +567,8 @@ def savesystemsetting():
 
 		datawrite["disksize"] = round(20 if int(datawrite.get("disksize", 0)) < 20 else int(datawrite.get("disksize", 20)))
 		datawrite["erasefrequency"] = round(24 if int(datawrite.get("erasefrequency", 0)) < 1 else int(datawrite.get("erasefrequency", 24)))
+		datawrite["autoreboot"] = round(3 if int(datawrite.get("autoreboot", 0)) < 3 else int(datawrite.get("autoreboot", 24)))
+		datawrite["endireboot"] = datawrite.get("endireboot", True)
 
 		webcam.writesetting(datawrite)
 
