@@ -26,7 +26,7 @@ basesettingsdata = {
 	"erasefrequency": 24,
 	"password": "panopticsystem",
 	"autoreboot": 24,
-	"endireboot": True
+	"endireboot": False
 }
 sessiondevices = {}
 
