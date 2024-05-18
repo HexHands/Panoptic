@@ -46,10 +46,16 @@ def write_log(text):
 
 def read_logs():
     initialize_log_system()
+    with open(LOG_STATE_FILE, "r") as f:
+        current_log = f.read().strip()
+
+    other_log = LOG_FILE2 if current_log == LOG_FILE1 else LOG_FILE1
     logs = []
-    for log_file in [LOG_FILE1, LOG_FILE2]:
+
+    for log_file in [other_log, current_log]:
         with open(log_file, "r") as file:
             logs.extend(file.readlines())
+            
     logs.reverse()
     return logs
 

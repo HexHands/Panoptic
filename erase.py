@@ -11,6 +11,11 @@ import requests
 
 #########################
 
+erasefilepath = "./data/erase.json"
+argvfilepath = "./data/argv.json"
+
+#########################
+
 def scanfiles():
 	data = []
 	for device in os.listdir("./captures"):
@@ -51,9 +56,10 @@ def eraseold():
 #########################
 
 def mainerase():
+	global erasefilepath
+	global argvfilepath
+
 	systemsettings = webcam.getsetting()
-	erasefilepath = "./data/erase.json"
-	argvfilepath = "./data/argv.json"
 	if not os.path.exists(erasefilepath):
 		with open(erasefilepath, "w") as file:
 			file.write(json.dumps({"lasterased": 0, "lastreboot": time.time()}))
@@ -92,6 +98,16 @@ stopthread = False
 
 def main():
 	global stopthread
+	global erasefilepath
+
+	if os.path.exists(erasefilepath):
+		with open(erasefilepath, "w") as file:
+			data = json.load(file)
+			data.update({"lastreboot": time.time()})
+			file.write(json.dumps(data, indent=2))
+	else:
+		with open(erasefilepath, "w") as file:
+			file.write(json.dumps({"lasterased": 0, "lastreboot": time.time()}))
 
 	while True:
 		if stopthread:

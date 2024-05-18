@@ -26,7 +26,7 @@ basesettingsdata = {
 	"erasefrequency": 24,
 	"password": "panopticsystem",
 	"autoreboot": 24,
-	"endireboot": False
+	"endireboot": True
 }
 sessiondevices = {}
 
@@ -99,7 +99,8 @@ def getdevicenodes(device):
 				log.l(f"ERROR: webcam.py > getdevicenodes > {e}")
 	else:
 		data = {}
-	return data.get(device, [])
+	data = data.get(device, [])
+	return data
 
 def writedevicedata(device, datawrite):
 	path = f"./data/devices/{device}.json"
@@ -150,8 +151,8 @@ def operate(usbnodes):
 			thread = threading.Thread(target=webcam, args=(stop, device))
 
 			sessiondevices[device] = {
-			"thread": thread,
-			"stop": stop
+				"thread": thread,
+				"stop": stop
 			}
 
 			thread.start()
@@ -161,7 +162,6 @@ def operate(usbnodes):
 
 def stopdevicethread(device):
 	if device in sessiondevices:
-
 		if not sessiondevices[device]["stop"].is_set():
 			print(log.l(f"Waiting for {device} to stop..."))
 			sessiondevices[device]["stop"].set()
@@ -200,7 +200,16 @@ def webcam(stop, device):
 				time.sleep(5)
 				continue
 			if data["videonode"] != None:
-				command.extend(["-video_size", f"{data['width']}x{data['height']}", "-i", data['videonode']])
+				finddefault = 0
+				while data["videonode"] == "Default":
+					if finddefault > len(nodes):
+						print(l.log(f"WARNING: webcam.py > webcam > {device} found no default video nodes."))
+					if "video" in nodes[finddefault]:
+						data["videonode"] = nodes[finddefault]
+					finddefault += 1
+					
+				if data["videonode"] != "Default":
+					command.extend(["-video_size", f"{data['width']}x{data['height']}", "-i", data['videonode']])
 			command.extend([
 				"-c:v", "libx264",
 				"-t", str(data["recordinglength"]),

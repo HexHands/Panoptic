@@ -139,8 +139,11 @@ def devices():
 def devicesany(device):
 	device = unquote(device)
 	devicedata = webcam.getdevicedata(device)
+	devicenodesshow = webcam.getdevicenodes(device)
+	if len(devicenodesshow) != 0:
+		devicenodesshow.append("Default")
 
-	nodeoptions = ", ".join([f'{{text: "{node}", value: "{node}"}}' for node in webcam.getdevicenodes(device)])
+	nodeoptions = ", ".join([f'{{text: "{node}", value: "{node}"}}' for node in devicenodesshow])
 
 	html = f"""
 	<script>
