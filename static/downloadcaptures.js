@@ -8,7 +8,7 @@ async function initdownload(baseUrl, day) {
 
         const downloadLinkElement = document.getElementById(`downloadLink${day}`);
         const downloadProgressElement = document.getElementById(`downloadProgress${day}`);
-        downloadLinkElement.textContent = ''; // Remove text content
+        downloadLinkElement.textContent = '';
         downloadProgressElement.textContent = 'Preparing...';
 
         await handledownload(videoUrls, day, downloadLinkElement, downloadProgressElement);
