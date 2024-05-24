@@ -101,10 +101,15 @@ def main():
 	global erasefilepath
 
 	if os.path.exists(erasefilepath):
-		with open(erasefilepath, "w") as file:
-			data = json.load(file)
-			data.update({"lastreboot": time.time()})
-			file.write(json.dumps(data, indent=2))
+		try:
+			with open(erasefilepath, "w") as file:
+				data = json.load(file)
+				data.update({"lastreboot": time.time()})
+				file.write(json.dumps(data, indent=2))
+		except:
+			with open(erasefilepath, "w") as file:
+				data = {"lasterased": 0, "lastreboot": time.time()}
+				file.write(json.dumps(data, indent=2))
 	else:
 		with open(erasefilepath, "w") as file:
 			file.write(json.dumps({"lasterased": 0, "lastreboot": time.time()}))
