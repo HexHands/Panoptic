@@ -40,14 +40,15 @@ def eraseold():
 	data = sorted(scanfiles(), key=parsedate)
 	currentsize = totalsize(data)
 	currentsize = currentsize / (1 << 30)
+	print(f"ERASE: erase.py > eraseold > Recordings taking up {currentsize}GB.")
 	while currentsize > systemsettings["disksize"] - 1:
 		try:
 			print(log.l(f"ERASE: erase.py > eraseold > Erased file at {data[0]['filepath']} with a size of {data[0]['size'] / (1 << 30)}GB."))
-			currentsize -= data[0]["size"]
+			currentsize -= data[0]["size"] / (1 << 30)
 			os.remove(data[0]["filepath"])
 			folder = os.path.dirname(data[0]["filepath"])
 			if len(os.listdir(folder)) == 0:
-				print(log.l("ERASE: erase.py > eraseold > Deleted folder {folder}."))
+				print(log.l(f"ERASE: erase.py > eraseold > Deleted folder {folder}."))
 				os.rmdir(folder)
 			data.pop(0)
 		except Exception as e:
@@ -131,5 +132,8 @@ def start():
 def stop():
 	global stopthread
 	stopthread = True
+
+def dev():
+	eraseold()
 
 #########################
