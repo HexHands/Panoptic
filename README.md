@@ -74,7 +74,7 @@ On this page, you can watch each video. All the camera feeds are combined into a
 ![PanopticLogo](https://hexhands.github.io/HexHandsASSET/IMAGE/Panoptic/CapturesDayPageTutorial.png)
 Finally, the last two sections: Panoptic will take you to our website, and the GitHub button links to this repo! If you have any issues or questions, please contact me by submitting an issue on GitHub. And if you're really into it, you're welcome to contribute code!
 
-# Knowen Issues
+# Known Issues
  - Videos do not work in Firefox
  - Possible node changes (restart your system)
 
