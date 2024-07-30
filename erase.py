@@ -91,7 +91,10 @@ def mainerase():
 
 		print(log.l(f"REBOOT: erase.py > mainerase > Reboot requested with code {response.status_code} and response {response.json()['message']}."))
 
-		#subprocess.run("reboot")
+		if response.status_code != 200:
+			print(log.l(f"REBOOT: erase.py > mainerase > Failed reboot, hard reboot."))
+
+			subprocess.run("reboot")
 
 #########################
 
