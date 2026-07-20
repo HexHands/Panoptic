@@ -87,12 +87,17 @@ def mainerase():
 		with open(argvfilepath, "r") as file:
 			argvs = json.load(file)
 
-		response = requests.put(f"http://localhost:{argvs.get('port', '8080')}/reboot", timeout=5, cookies={"password": systemsettings.get("password", "")})
+		try:
+			response = requests.put(f"http://localhost:{argvs.get('port', '8080')}/reboot", timeout=5, cookies={"password": systemsettings.get("password", "")})
 
-		print(log.l(f"REBOOT: erase.py > mainerase > Reboot requested with code {response.status_code} and response {response.json()['message']}."))
+			print(log.l(f"REBOOT: erase.py > mainerase > Reboot requested with code {response.status_code} and response {response.json()['message']}."))
 
-		if response.status_code != 200:
-			print(log.l(f"REBOOT: erase.py > mainerase > Failed reboot, hard reboot."))
+			if response.status_code != 200:
+				print(log.l(f"REBOOT: erase.py > mainerase > Failed reboot, hard reboot."))
+
+				subprocess.run("reboot")
+		except Exception as e:
+			print(log.l(f"REBOOT: erase.py > mainerase > Reboot exception occured with error {e}. Hard reboot."))
 
 			subprocess.run("reboot")
 
