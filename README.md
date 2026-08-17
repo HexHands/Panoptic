@@ -16,6 +16,7 @@ Panoptic, designed for the Raspberry Pi 4 running Ubuntu, transforms any USB cam
     sudo apt update
     sudo apt install python3
     sudo apt install python3-pip
+    sudo apt install git
     pip install flask
     pip install gunicorn
     pip install requests
