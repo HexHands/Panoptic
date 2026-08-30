@@ -41,7 +41,9 @@ function savesystemButton() {
   const jsonData = {
     "disksize": parseInt(document.getElementById('disksize').value) || 20,
     "erasefrequency": parseInt(document.getElementById('erasefrequency').value) || 24,
-    "password": document.getElementById('password').value || "panopticsystem"
+    "password": document.getElementById('password').value || "panopticsystem",
+    "autoreboot": parseInt(document.getElementById('autoreboot').value) || 24,
+    "endireboot": document.getElementById('endireboot').checked
   };
 
   fetch(postUrl, {
